@@ -1,8 +1,7 @@
-package org.kosiuk.webapp.carRentalApp.dao;
+package org.kosiuk.webapp.carRentalApp.dao.impl;
 
 import javax.sql.DataSource;
 
-import org.apache.*;
 import org.apache.commons.dbcp.BasicDataSource;
 
 public class ConnectionPoolHolder {

@@ -1,5 +1,7 @@
 package org.kosiuk.webapp.carRentalApp.dao;
 
-public class UserDAO {
+import org.kosiuk.webapp.carRentalApp.entity.User;
+
+public interface UserDAO extends GenericDAO<User>{
 
 }

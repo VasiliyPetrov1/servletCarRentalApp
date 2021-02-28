@@ -1,6 +1,8 @@
 package org.kosiuk.webapp.carRentalApp.servlet;
 
 import org.kosiuk.webapp.carRentalApp.command.Command;
+import org.kosiuk.webapp.carRentalApp.command.Login;
+import org.kosiuk.webapp.carRentalApp.command.MainPage;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,7 +15,8 @@ public class MainServlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
     public void init() {
-
+        commands.put("/login", new Login());
+        commands.put("/index", new MainPage());
     }
 
     @Override
@@ -56,10 +59,14 @@ public class MainServlet extends HttpServlet {
 
         String path = request.getRequestURI();
         System.out.println(path);
-        path = path.replaceAll("[\\w]+/app", "");
+        path = path.replaceAll("[\\w//]+/app", "");
         System.out.println(path);
-
-
-
+        Command command = commands.getOrDefault(path, commands.get("/index"));
+        String page = command.execute(request);
+        if(page.contains("redirect:")){
+            response.sendRedirect(page.replace("redirect:", "/"));
+        }else {
+            request.getRequestDispatcher(page).forward(request, response);
+        }
     }
 }
